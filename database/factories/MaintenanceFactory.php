@@ -2,23 +2,20 @@
 
 namespace Database\Factories;
 
+use App\Models\Machine;
 use App\Models\Maintenance;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends Factory<Maintenance>
- */
 class MaintenanceFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
+    protected $model = Maintenance::class;
+
+    public function definition()
     {
         return [
-            //
+            'machine_id' => Machine::factory(),
+            'date' => $this->faker->dateTimeBetween('-6 months', 'now'),
+            'description' => $this->faker->sentence(),
         ];
     }
 }

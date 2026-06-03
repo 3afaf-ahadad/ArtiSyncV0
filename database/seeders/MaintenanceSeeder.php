@@ -2,16 +2,19 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Maintenance;
+use App\Models\Machine;
 use Illuminate\Database\Seeder;
 
 class MaintenanceSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
+    public function run()
     {
-        //
+        $machines = Machine::all();
+        foreach ($machines as $machine) {
+            if (rand(1, 10) <= 7) {
+                Maintenance::factory(rand(1, 4))->create(['machine_id' => $machine->id]);
+            }
+        }
     }
 }
