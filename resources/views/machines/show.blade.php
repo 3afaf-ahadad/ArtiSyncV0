@@ -53,12 +53,16 @@
                     <input type="date" name="date" value="{{ date('Y-m-d') }}" class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#95651A] focus:border-[#95651A]" required>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
                     <input type="text" name="description" placeholder="Ex: Remplacement courroie" class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#95651A]" required>
                 </div>
+                <span> </span>
             </div>
             <div>
-                <button type="submit" class="bg-[#95651A] text-white px-4 py-2 rounded-md hover:bg-[#7a5015] transition text-sm">Ajouter l'intervention</button>
+                <button type="submit"
+                        class="btn-primary text-white px-4 py-2 my-2 rounded-md hover:bg-[#7a5015] transition text-sm"
+
+                >Ajouter l'intervention</button>
             </div>
         </form>
     </div>
