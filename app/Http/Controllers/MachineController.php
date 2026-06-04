@@ -16,6 +16,22 @@ class MachineController extends Controller
      * @param Machine $machine
      * @return bool
      */
+
+    public function index()
+{
+    /** @var User $user */
+    $user = Auth::user();
+    $query = Machine::with('filiere');
+
+    if ($user->isResponsable()) {
+        $query->where('filiere_id', $user->filiere_id);
+    }
+
+    $machines = $query->orderBy('created_at', 'desc')->paginate(10);
+
+    return view('machines.index', compact('machines'));
+}
+
     protected function authorizeMachine($user, $machine)
     {
         if ($user->isAdmin()) return true;
