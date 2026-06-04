@@ -45,7 +45,8 @@
                 </select>
                 @error('status') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
             </div>
-
+            <br>
+            
             <div class="flex justify-end space-x-3 pt-3">
                 <a href="{{ route('machines.index') }}" 
                    class="inline-block bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300 transition text-sm">
