@@ -16,27 +16,39 @@ class MachineController extends Controller
      * @param Machine $machine
      * @return bool
      */
-
-    public function index()
-{
-    /** @var User $user */
-    $user = Auth::user();
-    $query = Machine::with('filiere');
-
-    if ($user->isResponsable()) {
-        $query->where('filiere_id', $user->filiere_id);
-    }
-
-    $machines = $query->orderBy('created_at', 'desc')->paginate(10);
-
-    return view('machines.index', compact('machines'));
-}
-
     protected function authorizeMachine($user, $machine)
     {
         if ($user->isAdmin()) return true;
         return $machine->filiere_id === $user->filiere_id;
     }
+
+
+    public function index(Request $request)
+    {
+        $query = Machine::with('filiere');
+
+        // Apply filters
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        if ($request->filled('filiere')) {
+            $query->where('filiere_id', $request->filiere);
+        }
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // Role-based restriction (if not admin)
+        if (Auth::check() && Auth::user()->role === 'responsable') {
+            $query->where('filiere_id', Auth::user()->filiere_id);
+        }
+
+        $machines = $query->paginate(10);
+        $filieres = Filiere::all();
+
+        return view('machines.index', compact('machines', 'filieres'));
+    }
+
 
     public function create()
     {
@@ -117,7 +129,8 @@ class MachineController extends Controller
         $user = Auth::user();
         if (!$this->authorizeMachine($user, $machine)) abort(403);
 
-        $maintenances = $machine->maintenances()->orderBy('date', 'desc')->get();
+        $maintenances = $machine->maintenances()->orderBy('date', 'desc')->paginate(10);
         return view('machines.show', compact('machine', 'maintenances'));
     }
+
 }
