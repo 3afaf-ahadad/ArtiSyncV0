@@ -23,21 +23,21 @@
                 @endforeach
             </select>
         </div>
-        <div class="w-44">
+        <iv class="w-44">
             <label class="block text-sm font-medium text-gray-700 mb-1">Date début</label>
             <input type="date" name="date_from" value="{{ request('date_from') }}" class="w-full px-3 py-2 border rounded-md">
-        </div>
+        </iv>
         <div class="w-44">
             <label class="block text-sm font-medium text-gray-700 mb-1">Date fin</label>
             <input type="date" name="date_to" value="{{ request('date_to') }}" class="w-full px-3 py-2 border rounded-md">
         </div>
-        <!-- <div class="flex gap-2">
-            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">Filtrer</button>
-            <a href="{{ route('machines.index') }}" class="inline-block bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300 transition text-center">Réinitialiser</a>
-        </div> -->
-        <div class="flex gap-2">
-            <button type="submit" class="btn-primary text-white px-4 py-2 rounded-md text-sm">Rechercher</button>
-            <a href="{{ route('machines.index') }}" class="inline-block bg-gray-200 text-gray-800 px-4 py-6 rounded-md">Réinitialiser</a>
+        <div class="flex items-end gap-2">
+            <button type="submit" class="btn-primary text-white px-4 py-2 rounded-md text-sm h-[42px] inline-flex items-center">
+                Rechercher
+            </button>
+            <a href="{{ route('machines.index') }}" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-md text-sm h-[42px] inline-flex items-center">
+                Réinitialiser
+            </a>
         </div>
     </form>
 </div>
@@ -70,13 +70,36 @@
                 </td>
                 <td class="px-6 py-4">{{ $machine->created_at->format('d/m/Y') }}</td>
                 <td class="px-6 py-4 space-x-2">
-                    <a href="{{ route('machines.show', $machine) }}" class="text-blue-600 hover:text-blue-900">Détails</a>
-                    <a href="{{ route('machines.edit', $machine) }}" class="text-indigo-600 hover:text-indigo-900">Modifier</a>
-                    <form action="{{ route('machines.destroy', $machine) }}" method="POST" class="inline-block" onsubmit="return confirm('Supprimer cette machine ?')">
-                        @csrf @method('DELETE')
-                        <button type="submit" class="text-red-600 hover:text-red-900">Supprimer</button>
-                    </form>
-                </td>
+<div class="flex items-center gap-3">
+    <!-- Détails (eye icon) -->
+    <a href="{{ route('machines.show', $machine) }}" class="text-blue-600 hover:text-blue-800 transition" title="Détails">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+        </svg>
+        <span class="sr-only">Détails</span>
+    </a>
+
+    <!-- Modifier (pencil icon) -->
+    <a href="{{ route('machines.edit', $machine) }}" class="text-indigo-600 hover:text-indigo-800 transition" title="Modifier">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+        </svg>
+        <span class="sr-only">Modifier</span>
+    </a>
+
+    <!-- Supprimer (trash icon) -->
+    <form action="{{ route('machines.destroy', $machine) }}" method="POST" class="inline-block" onsubmit="return confirm('Supprimer cette machine ?')">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="text-red-600 hover:text-red-800 transition" title="Supprimer">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+            <span class="sr-only">Supprimer</span>
+        </button>
+    </form>
+</div>                </td>
             </tr>
             @endforeach
         </tbody>
