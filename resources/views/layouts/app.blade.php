@@ -106,7 +106,7 @@
                     <div class="flex items-center gap-2">
                         <h1 class="text-xl font-semibold text-primary">
                             @if(Auth::user()->isAdmin())
-                            Chef de pôle CP
+                            Chef de pôle
                             @else
                             Formateur · {{ Auth::user()->filiere->name ?? 'Filière' }}
                             @endif
